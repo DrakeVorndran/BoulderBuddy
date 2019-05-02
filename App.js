@@ -5,8 +5,8 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 
-import Routes from './Routes'
-import RouteEditor from './RouteEditor'
+import Problems from './Problems'
+import ProblemEditor from './ProblemEditor'
 
 const store = createStore(reducers)
 
@@ -14,7 +14,7 @@ class HomeScreen extends React.Component {
   render() {
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Routes navigation={this.props.navigation}/>
+        <Problems navigation={this.props.navigation}/>
       </View>
     )
   }
@@ -24,7 +24,7 @@ class HomeScreen extends React.Component {
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
-  Editor: { screen: RouteEditor }
+  Editor: { screen: ProblemEditor }
 })
 
 const MainContainer = createAppContainer(MainNavigator)
@@ -32,7 +32,7 @@ const MainContainer = createAppContainer(MainNavigator)
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={store} style={styles.container}>
         <MainContainer/>
       </Provider>
     );
@@ -42,7 +42,6 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f',
     alignItems: 'center',
     justifyContent: 'center',
   },

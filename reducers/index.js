@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import routeReducer from './route-reducer'
+import problemReducer from './problem-reducer'
 
 export default combineReducers({
-  routes: routeReducer
+  problems: problemReducer
 })

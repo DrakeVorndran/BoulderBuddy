@@ -1,16 +1,16 @@
-import { ADD_ROUTE, DELETE_ROUTE, UPDATE_ROUTE } from '../actions/index'
+import { ADD_PROBLEM, DELETE_PROBLEM, UPDATE_PROBLEM } from '../actions/index'
 
-const routeReducer = (state = [], action) => {
+const problemReducer = (state = [], action) => {
   switch(action.type) {
-    case ADD_ROUTE:
+    case ADD_PROBLEM:
       const { name, level } = action.payload
       return [...state, { name, level, attempts: 0 }]
 
-    case DELETE_ROUTE:
+    case DELETE_PROBLEM:
       const { index } = action.payload
       return [...state.slice(0, index), ...state.slice(index + 1)]
 
-    case UPDATE_ROUTE:
+    case UPDATE_PROBLEM:
       const { attempts } = action.payload
       return state.map((item, i) => {
         if(i === action.payload.index) {
@@ -25,4 +25,4 @@ const routeReducer = (state = [], action) => {
   }
 }
 
-export default routeReducer
+export default problemReducer

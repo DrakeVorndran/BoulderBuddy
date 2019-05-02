@@ -1,24 +1,24 @@
-export const ADD_ROUTE = "ADD_ROUTE"
-export const DELETE_ROUTE = "DELETE_ROUTE"
-export const UPDATE_ROUTE = "UPDATE_ROUTE"
+export const ADD_PROBLEM = "ADD_PROBLEM"
+export const DELETE_PROBLEM = "DELETE_PROBLEM"
+export const UPDATE_PROBLEM = "UPDATE_PROBLEM"
 
-export const addRoute = (name, level) => {
+export const addProblem = (name, level) => {
   return {
-    type: ADD_ROUTE,
+    type: ADD_PROBLEM,
     payload: {name, level}
   }
 }
 
-export const deleteRoute = (index) => {
+export const deleteProblem = (index) => {
   return {
-    type: DELETE_ROUTE,
+    type: DELETE_PROBLEM,
     payload: { index }
   }
 }
 
-export const updateRoute = (index, attempts=1) => {
+export const updateProblem = (index, attempts=1) => {
   return {
-    type: UPDATE_ROUTE,
+    type: UPDATE_PROBLEM,
     payload: {index, attempts}
   }
 }
