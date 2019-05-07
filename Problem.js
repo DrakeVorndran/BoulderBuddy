@@ -2,11 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const Problem = function (props) {
-  const { name } = props.problem
+  console.log(props.problem)
+  const { name, grade } = props.problem
   const {height, width} = Dimensions.get('window')
   return (
     <View style={{...styles.container, width: width*.9 , height: height/6}}>
-      <Text style={styles.title}>{name}</Text>
+      <Text style={styles.title}>{name}, {"V"+grade}</Text>
     </View>
   )
 }

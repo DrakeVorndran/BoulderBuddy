@@ -31,10 +31,12 @@ class Problems extends React.Component {
     return(
       <View style={styles.container}>
         {this.showProblems()}
+        <View style={styles.button}>
         <Button 
           title="Add Problem"
           onPress={e => this.props.navigation.navigate('Editor')}
         />
+        </View>
       </View>
     )
   }
@@ -64,5 +66,8 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     width: '100%',    
+  },
+  button: {
+    marginBottom: 20,
   }
 });
