@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, Button, TextInput, KeyboardAvoidingView, Picker } from 'react-native';
-import { addProblem } from './actions'
-import { Camera, Permissions } from 'expo';
+import { StyleSheet, Text, View, Button, TextInput, KeyboardAvoidingView, Picker, Image } from 'react-native';
+import { addProblem } from '../actions'
+import { FileSystem } from 'expo'
+
+const PHOTOS_DIR = FileSystem.documentDirectory + 'photos'
 
 class ProblemEditor extends Component {
   constructor(props) {
@@ -11,38 +13,13 @@ class ProblemEditor extends Component {
     this.state = {
       problemName: '',
       problemGrade: null,
-      captures: [],
-      capturing: null,
-      hasCameraPermission: null,
-      cameraType: Camera.Constants.Type.back,
-      flashMode: Camera.Constants.FlashMode.off,
     }
   }
 
-  setFlashMode = (flashMode) => this.setState({ flashMode });
-
-  setCameraType = (cameraType) => this.setState({ cameraType });
-
-  handleCaptureIn = () => this.setState({ capturing: true });
-
-  handleCaptureOut = () => {
-    if (this.state.capturing)
-      this.camera.stopRecording();
-  };
-
-  handleShortCapture = async () => {
-    const photoData = await this.camera.takePictureAsync();
-    this.setState({ capturing: false, captures: [photoData, ...this.state.captures] })
-  };
-
-  async componentDidMount() {
-    const camera = await Permissions.askAsync(Permissions.CAMERA);
-    const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-    const hasCameraPermission = (camera.status === 'granted' && audio.status === 'granted');
-
-    this.setState({ hasCameraPermission });
-  };
-
+  
+  componentDidMount() {
+    console.log(this.props.navigation.getParam('picture', null))
+  }
 
   add() {
     if (this.state.problemName && this.state.problemGrade) {
@@ -69,27 +46,14 @@ class ProblemEditor extends Component {
 
 
   render() {
-    const { hasCameraPermission, flashMode, cameraType, capturing, captures } = this.state;
-
-    if (hasCameraPermission === null) {
-      return <View />;
-    } else if (hasCameraPermission === false) {
-      return <Text>Access to camera has been denied.</Text>;
-    }
+    const { navigation } = this.props
+    const fileName = navigation.getParam('picture', null)
+    const uri = `${PHOTOS_DIR}/${fileName}`
+    console.log(`${PHOTOS_DIR}/${fileName}`)
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View>
-          <Camera
-            zoom={.3}
-            ratio={'1:1'}
-            type={cameraType}
-            flashMode={flashMode}
-            style={styles.preview}
-            ref={camera => this.camera = camera}
-          >
-            <Text>Where does this end up</Text>
-          </Camera>
-        </View>
+        <Image source={{ uri }} style={{height: 100, width: 100}}/>
+        
         <View style={styles.inputField}>
           <Text style={styles.label}>Problem Name:</Text>
           <TextInput
@@ -154,19 +118,4 @@ const styles = StyleSheet.create({
     height: 50,
     width: '50%',
   },
-  preview: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: 100,
-    width: 100,
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  }
-
 });

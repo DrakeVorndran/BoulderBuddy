@@ -5,8 +5,9 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 
-import Problems from './Problems'
-import ProblemEditor from './ProblemEditor'
+import Problems from './components/Problems'
+import ProblemEditor from './components/ProblemEditor'
+import RoutePicture from './components/RoutePicture'
 
 const store = createStore(reducers)
 
@@ -24,7 +25,8 @@ class HomeScreen extends React.Component {
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
-  Editor: { screen: ProblemEditor }
+  Camera: { screen: RoutePicture },
+  Editor: { screen: ProblemEditor },
 })
 
 const MainContainer = createAppContainer(MainNavigator)

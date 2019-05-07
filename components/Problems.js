@@ -1,8 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { connect } from 'react-redux'
-import { addProblem } from './actions'
-
 import Problem from './Problem'
 
 class Problems extends React.Component {
@@ -34,7 +32,7 @@ class Problems extends React.Component {
         <View style={styles.button}>
         <Button 
           title="Add Problem"
-          onPress={e => this.props.navigation.navigate('Editor')}
+          onPress={e => this.props.navigation.navigate('Camera')}
         />
         </View>
       </View>
@@ -50,7 +48,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-    addProblem
   }
 }
 
