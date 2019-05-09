@@ -2,10 +2,10 @@ export const ADD_PROBLEM = "ADD_PROBLEM"
 export const DELETE_PROBLEM = "DELETE_PROBLEM"
 export const UPDATE_PROBLEM = "UPDATE_PROBLEM"
 
-export const addProblem = (name, grade) => {
+export const addProblem = (name, grade, image) => {
   return {
     type: ADD_PROBLEM,
-    payload: {name, grade}
+    payload: {name, grade, image}
   }
 }
 

@@ -5,7 +5,6 @@ import { Feather as Icon } from 'react-native-vector-icons'
 class RoutePicture extends Component {
   constructor(props) {
     super(props)
-    console.log(FileSystem.documentDirectory)
 
     this.state = {
       captures: [],
@@ -13,10 +12,11 @@ class RoutePicture extends Component {
       hasCameraPermission: null,
       cameraType: Camera.Constants.Type.back,
       flashMode: Camera.Constants.FlashMode.off,
+      willTake: true,
     }
   }
 
-  
+
 
   setFlashMode = (flashMode) => this.setState({ flashMode })
 
@@ -36,7 +36,6 @@ class RoutePicture extends Component {
 
   async componentDidMount() {
     FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
-      console.log(e, 'Directory exists');
     });
     const camera = await Permissions.askAsync(Permissions.CAMERA)
     const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING)
@@ -47,14 +46,15 @@ class RoutePicture extends Component {
 
   takePicture = () => {
     if (this.camera) {
+      this.setState({ willTake: false })
       this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved })
     }
   }
 
   onPictureSaved = async photo => {
     const title = `${Date.now()}.jpg`
-    console.log(`${FileSystem.documentDirectory}photos/${title}`)
-    this.props.navigation.navigate('Editor', {picture:title})
+    this.setState({willTake: true})
+    this.props.navigation.navigate('Editor', { picture: title })
     await FileSystem.moveAsync({
       from: photo.uri,
       to: `${FileSystem.documentDirectory}photos/${title}`,
@@ -64,7 +64,7 @@ class RoutePicture extends Component {
 
   render() {
     const { height, width } = Dimensions.get('window')
-    const { hasCameraPermission, flashMode, cameraType, capturing, captures } = this.state
+    const { hasCameraPermission, flashMode, cameraType, capturing, captures, willTake } = this.state
 
     if (hasCameraPermission === null) {
       return <View />
@@ -72,32 +72,48 @@ class RoutePicture extends Component {
       return <Text>Access to camera has been denied.</Text>
     }
     return (
-      <View>
+
+      <View style={styles.container}>
         <Camera
           type={cameraType}
+          ratio='1:1'
           flashMode={flashMode}
-          style={{ ...styles.preview, height: height - 80, width }}
+          style={{ ...styles.preview, height: width - 30, width: width - 30 }}
           ref={camera => this.camera = camera}
         >
-          <TouchableOpacity onPress={e => this.takePicture()}>
-            <View style={styles.capture}>
-              <Icon name="aperture" size={100} color="#FFF"/>
-            </View>
-          </TouchableOpacity>
+
         </Camera>
+        {willTake?
+        <TouchableOpacity onPress={e => this.takePicture()}>
+          <View style={styles.capture}>
+            <Icon name="aperture" size={100} color="#000" />
+          </View>
+        </TouchableOpacity>
+        :
+        <Text style={styles.loading}>Loading</Text>
+        }
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   preview: {
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
   capture: {
     margin: 20,
-  }
+  },
+  loading: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 })
 
 export default RoutePicture

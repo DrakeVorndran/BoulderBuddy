@@ -3,8 +3,8 @@ import { ADD_PROBLEM, DELETE_PROBLEM, UPDATE_PROBLEM } from '../actions/index'
 const problemReducer = (state = [], action) => {
   switch(action.type) {
     case ADD_PROBLEM:
-      const { name, grade } = action.payload
-      return [...state, { name, grade, attempts: 0 }]
+      const { name, grade, image } = action.payload
+      return [...state, { name, grade, image, attempts: 0 }]
 
     case DELETE_PROBLEM:
       const { index } = action.payload

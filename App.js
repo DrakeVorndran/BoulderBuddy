@@ -7,6 +7,7 @@ import reducers from './reducers'
 
 import Problems from './components/Problems'
 import ProblemEditor from './components/ProblemEditor'
+import ProblemView from './components/ProblemView'
 import RoutePicture from './components/RoutePicture'
 
 const store = createStore(reducers)
@@ -27,6 +28,7 @@ const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Camera: { screen: RoutePicture },
   Editor: { screen: ProblemEditor },
+  Problem: { screen: ProblemView },
 })
 
 const MainContainer = createAppContainer(MainNavigator)

@@ -10,7 +10,7 @@ class Problems extends React.Component {
 
   showItems({item, index}) {
     return (
-      <Problem problem={item} />
+      <Problem problem={item} navigation={this.props.navigation} index={index} />
     )
   }
 
@@ -19,7 +19,8 @@ class Problems extends React.Component {
       <FlatList 
         style={styles.list}
         data={this.props.problems}
-        renderItem={this.showItems}
+        // renderItem={this.showItems.bind(this)}
+        renderItem={({item, index}) => this.showItems({item, index})}
         keyExtractor={(problem, i) => problem.name+i}
       />
       )

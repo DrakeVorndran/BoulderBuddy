@@ -18,12 +18,11 @@ class ProblemEditor extends Component {
 
   
   componentDidMount() {
-    console.log(this.props.navigation.getParam('picture', null))
   }
 
   add() {
     if (this.state.problemName && this.state.problemGrade) {
-      this.props.addProblem(this.state.problemName, this.state.problemGrade)
+      this.props.addProblem(this.state.problemName, this.state.problemGrade, this.props.navigation.getParam('picture',null))
       this.setState({ problemName: '' })
       this.props.navigation.navigate('Home')
     }
@@ -49,10 +48,9 @@ class ProblemEditor extends Component {
     const { navigation } = this.props
     const fileName = navigation.getParam('picture', null)
     const uri = `${PHOTOS_DIR}/${fileName}`
-    console.log(`${PHOTOS_DIR}/${fileName}`)
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Image source={{ uri }} style={{height: 100, width: 100}}/>
+        <Image source={{ uri }} style={{height: 150, width: 150}}/>
         
         <View style={styles.inputField}>
           <Text style={styles.label}>Problem Name:</Text>
