@@ -12,7 +12,6 @@ const Problem = function (props) {
   const { height, width } = Dimensions.get('window')
   const uri = `${PHOTOS_DIR}/${image}`
   const index = props.index
-  console.log(index)
   return (
     <TouchableHighlight onPress={e => props.navigation.navigate('Problem', { index: index })}>
       <View style={{ ...styles.container, width: width * .9, height: height / 6 }}>
